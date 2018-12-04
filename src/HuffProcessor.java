@@ -65,7 +65,7 @@ public class HuffProcessor {
 		}
 
 		HuffNode x = node(in);
-		y(x, in, out);
+		//y(x, in, out);
 
 		while (true) {
 			int val = in.readBits(BITS_PER_WORD);
@@ -78,10 +78,10 @@ public class HuffProcessor {
 	//helper
 	private HuffNode node(BitInputStream x) {
 		int y = x.readBits(BITS_PER_INT);
-		if(y<0) {
-			throw new HuffException("Not a valid entry.");
+		if(y == -1) {
+			throw new HuffException("Not a valid entry");
 		}
-		if(y==0) {
+		if(y == 0) {
 			
 			HuffNode left = node(x);
 			HuffNode right = node(x);
@@ -94,6 +94,9 @@ public class HuffProcessor {
 	}
 	//another helper
 	private void y(HuffNode x, BitInputStream in, BitOutputStream out) {
-		
+		int y = in.readBits(BITS_PER_INT);
+		while( y != PSEUDO_EOF) {
+		  y = in.readBits(BITS_PER_WORD);
+		}
 	}
 }
