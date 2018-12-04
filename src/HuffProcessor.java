@@ -63,6 +63,10 @@ public class HuffProcessor {
 		if(bits<0) {
 			throw new HuffException("yoooo wyd?");
 		}
+		if (bits != HUFF_TREE) {
+			throw new HuffException("yoo cmon :(");
+		}
+		
 	
 		
 		while (true){
