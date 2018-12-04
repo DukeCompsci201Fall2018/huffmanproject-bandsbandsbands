@@ -76,14 +76,14 @@ public class HuffProcessor {
 		out.close();
 	}
 	//helper
-	private HuffNode node(BitInputStream x,int y) {
+	private HuffNode node(BitInputStream x) {
 		int y = x.readBits(BITS_PER_INT);
 		if(y<0) {
 			throw new HuffException("Not a valid entry.");
 		}
 		if(y==0) {
-			HuffNode left = node(x,x.readBits(BITS_PER_WORD+1));
-			HuffNode right = node(x,x.readBits(BITS_PER_WORD)+1);
+			HuffNode left = node(x);
+			HuffNode right = node(x);
 			return new HuffNode(0,0,left.myLeft,right.myRight);
 		}
 		else {
