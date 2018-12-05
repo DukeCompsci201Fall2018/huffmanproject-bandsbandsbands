@@ -57,9 +57,9 @@ public class HuffProcessor {
 	 */
 	public void decompress(BitInputStream in, BitOutputStream out) {
 		int bits = in.readBits(BITS_PER_INT);
-	//	if (bits < 0) {
-	//		throw new HuffException("Not a valid entry.");
-	//	}
+		if (bits < 0) {
+			throw new HuffException("Not a valid entry.");
+		}
 		if (bits != HUFF_TREE) {
 			throw new HuffException("Not a valid entry.");
 		}
@@ -97,7 +97,7 @@ public class HuffProcessor {
 	private void y(HuffNode x, BitInputStream in, BitOutputStream out) {
 		int y = in.readBits(BITS_PER_INT);
 		while( y != PSEUDO_EOF) {
-		  y = in.readBits(BITS_PER_WORD);
+		  y = in.readBits(BITS_PER_WORD+1);
 		}
 	}
 }
