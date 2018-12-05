@@ -71,11 +71,11 @@ public class HuffProcessor {
 
 	// helper
 	private HuffNode node(BitInputStream x) {
-		int y = x.readBits(BITS_PER_INT);
+		int y = x.readBits(1);
 		if (y == -1) {
 			throw new HuffException("Not a valid entry");
 		}
-		if(y == 0 ) {
+		if(y == 0) {
 			HuffNode left = node(x) ;
 			HuffNode right = node(x) ;
 			return new HuffNode(0,0,left,right);
