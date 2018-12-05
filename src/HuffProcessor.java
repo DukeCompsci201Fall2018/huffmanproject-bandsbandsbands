@@ -74,15 +74,14 @@ public class HuffProcessor {
 		if (y == -1) {
 			throw new HuffException("Not a valid entry");
 		}
-		if(y == 0) {
-			HuffNode left = node(x) ;
-			HuffNode right = node(x) ;
-			return new HuffNode(0,0,left,right);
-		}
-		else {
-		int value = x.readBits(BITS_PER_WORD+1);
-		return new HuffNode(value,0,null,null);
-			
+		if (y == 0) {
+			HuffNode left = node(x);
+			HuffNode right = node(x);
+			return new HuffNode(0, 0, left, right);
+		} else {
+			int value = x.readBits(BITS_PER_WORD + 1);
+			return new HuffNode(value, 0, null, null);
+
 		}
 	}
 
@@ -100,7 +99,7 @@ public class HuffProcessor {
 					y = y.myRight;
 				}
 
-				if (y.myValue != 0) {
+				if (y.myValue > 0) {
 					if (y.myValue == PSEUDO_EOF) {
 						break;
 					} else {
