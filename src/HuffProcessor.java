@@ -37,16 +37,35 @@ public class HuffProcessor {
 	 * @param in  Buffered bit stream of the file to be compressed.
 	 * @param out Buffered bit stream writing to the output file.
 	 */
+	//I started your compress finish this baby up.
 	public void compress(BitInputStream in, BitOutputStream out) {
-
-		while (true) {
-			int val = in.readBits(BITS_PER_WORD);
-			if (val == -1)
-				break;
-			out.writeBits(BITS_PER_WORD, val);
-		}
+		int[] counts = readForCounts(in);
+		HuffNode root = makeTreeFromCounts(counts);
+		String[] codings = makeCodingsFromTree(root);
+		
+		out.writeBits(BITS_PER_INT,HUFF_TREE);
+		writeHeader(root,out);
+		
+		in.reset();
+		writeCompressedBits(codings,in,out);
 		out.close();
 	}
+	private int[] readForCounts(BitInputStream in) {
+		return new int[0];
+	}
+	private HuffNode makeTreeFromCounts(int[] counts) {
+		return null;
+	}
+	private String[] makeCodingsFromTree(HuffNode x) {
+		return null;
+	}
+	private void writeHeader(HuffNode root, BitOutputStream out) {
+		
+	}
+	private void writeCompressedBits(String[] y,BitInputStream in, BitOutputStream out) {
+		
+	}
+	
 
 	/**
 	 * Decompresses a file. Output file must be identical bit-by-bit to the
@@ -60,14 +79,13 @@ public class HuffProcessor {
 		if (bits != HUFF_TREE) {
 			throw new HuffException("Not a valid entry.");
 		}
-		else if(bits == -1) {
-			throw new HuffException("Not a vali entry");
-		}
+
 		else {
-		HuffNode x = node(in);
-		reader(x, in, out);
-		out.close();
-	}}
+			HuffNode x = node(in);
+			reader(x, in, out);
+			out.close();
+		}
+	}
 
 	// helper
 	private HuffNode node(BitInputStream x) {
