@@ -65,39 +65,51 @@ public class HuffProcessor {
 		}
 
 		HuffNode x = node(in);
-		y(x, in, out);
-
-//		while (true) {
-//			int val = in.readBits(BITS_PER_WORD);
-//			if (val == -1)
-//				break;
-//			out.writeBits(BITS_PER_WORD, val);
-//		}
+		reader(x, in, out);
 		out.close();
 	}
-	//helper
+
+	// helper
 	private HuffNode node(BitInputStream x) {
 		int y = x.readBits(BITS_PER_INT);
-		if(y == -1) {
+		if (y == -1) {
 			throw new HuffException("Not a valid entry");
 		}
-		if(y == 0) {
-			
-			HuffNode z = node(x);
-			HuffNode left = z.myLeft;
-			HuffNode right = z.myRight;
+		if(y == 0 ) {
+			HuffNode left = node(x) ;
+			HuffNode right = node(x) ;
 			return new HuffNode(0,0,left,right);
 		}
 		else {
-			int value = x.readBits(BITS_PER_WORD+1);
-			return new HuffNode(value,0,null,null);
+		int value = x.readBits(BITS_PER_WORD+1);
+		return new HuffNode(value,0,null,null);
+			
 		}
 	}
-	//another helper
-	private void y(HuffNode x, BitInputStream in, BitOutputStream out) {
-		int y = in.readBits(BITS_PER_INT);
-		while( y != PSEUDO_EOF) {
-		  y = in.readBits(BITS_PER_WORD+1);
+
+	// another helper
+	private void reader(HuffNode x, BitInputStream in, BitOutputStream out) {
+		HuffNode y = x;
+		while (true) {
+			int bits = in.readBits(1);
+			if (bits == -1) {
+				throw new HuffException("Not valid");
+			} else {
+				if (bits == 0) {
+					y = y.myLeft;
+				} else {
+					y = y.myRight;
+				}
+
+				if (y.myValue != 0) {
+					if (y.myValue == PSEUDO_EOF) {
+						break;
+					} else {
+						out.writeBits(BITS_PER_WORD, y.myValue);
+						y = x;
+					}
+				}
+			}
 		}
 	}
 }
