@@ -56,7 +56,7 @@ public class HuffProcessor {
 	 * @param out Buffered bit stream writing to the output file.
 	 */
 	public void decompress(BitInputStream in, BitOutputStream out) {
-		int bits = in.readBits(BITS_PER_INT);
+		int bits = in.readBits(1);
 		if (bits != HUFF_TREE) {
 			throw new HuffException("Not a valid entry.");
 		}
