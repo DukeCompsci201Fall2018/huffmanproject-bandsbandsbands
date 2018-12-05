@@ -1,4 +1,4 @@
-
+import java.util.*;
 /**
  * Although this class has a history of several years, it is starting from a
  * blank-slate, new and clean implementation as of Fall 2018.
@@ -50,10 +50,45 @@ public class HuffProcessor {
 		writeCompressedBits(codings,in,out);
 		out.close();
 	}
+	//general idea could be wrong
 	private int[] readForCounts(BitInputStream in) {
-		return new int[0];
+		int[] x = new int[ALPH_SIZE + 1];
+		
+		x[PSEUDO_EOF] = 1;
+		while(true) {
+			int bits = in.readBits(BITS_PER_WORD);			
+			if (bits == -1) {
+				throw new HuffException("Not valid");
+			} else {
+				if (bits > 0) {
+					if (bits == PSEUDO_EOF) {
+						break;
+					} else {
+						x[bits]++;
+
+					}
+				}
+			}
+		}
+
+		return x;
 	}
 	private HuffNode makeTreeFromCounts(int[] counts) {
+		PriorityQueue<HuffNode> pq = new PriorityQueue<>();
+
+
+		for(every index such that freq[index] > 0) {
+		    pq.add(new HuffNode(index,freq[index],null,null);
+		}
+
+		while (pq.size() > 1) {
+		    HuffNode left = pq.remove();
+		    HuffNode right = pq.remove();
+		    // create new HuffNode t with weight from
+		    // left.weight+right.weight and left, right subtrees
+		    pq.add(t);
+		}
+		HuffNode root = pq.remove();
 		return null;
 	}
 	private String[] makeCodingsFromTree(HuffNode x) {
