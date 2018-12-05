@@ -65,14 +65,14 @@ public class HuffProcessor {
 		}
 
 		HuffNode x = node(in);
-		//y(x, in, out);
+		y(x, in, out);
 
-		while (true) {
-			int val = in.readBits(BITS_PER_WORD);
-			if (val == -1)
-				break;
-			out.writeBits(BITS_PER_WORD, val);
-		}
+//		while (true) {
+//			int val = in.readBits(BITS_PER_WORD);
+//			if (val == -1)
+//				break;
+//			out.writeBits(BITS_PER_WORD, val);
+//		}
 		out.close();
 	}
 	//helper
