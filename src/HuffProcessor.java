@@ -56,17 +56,18 @@ public class HuffProcessor {
 	 * @param out Buffered bit stream writing to the output file.
 	 */
 	public void decompress(BitInputStream in, BitOutputStream out) {
-		int bits = in.readBits(1);
+		int bits = in.readBits(BITS_PER_INT);
 		if (bits != HUFF_TREE) {
 			throw new HuffException("Not a valid entry.");
 		}
-		if(bits == -1) {
+		else if(bits == -1) {
 			throw new HuffException("Not a vali entry");
 		}
+		else {
 		HuffNode x = node(in);
 		reader(x, in, out);
 		out.close();
-	}
+	}}
 
 	// helper
 	private HuffNode node(BitInputStream x) {
