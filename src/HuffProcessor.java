@@ -73,25 +73,29 @@ public class HuffProcessor {
 
 		return x;
 	}
+
 	private HuffNode makeTreeFromCounts(int[] counts) {
 		PriorityQueue<HuffNode> pq = new PriorityQueue<>();
 
-
-		for(every index such that freq[index] > 0) {
-		    pq.add(new HuffNode(index,freq[index],null,null);
+		for (int i = 0; i < counts.length; i++) {
+			if (counts[i] > 0) {
+				pq.add(new HuffNode(i, counts[i], null, null));
+			}
 		}
 
 		while (pq.size() > 1) {
 		    HuffNode left = pq.remove();
 		    HuffNode right = pq.remove();
-		    // create new HuffNode t with weight from
-		    // left.weight+right.weight and left, right subtrees
+		    HuffNode t = new HuffNode(0,left.myWeight+right.myWeight,left,right);
 		    pq.add(t);
 		}
 		HuffNode root = pq.remove();
-		return null;
+		return root;
 	}
+	
 	private String[] makeCodingsFromTree(HuffNode x) {
+		String[] encodings = new String[ALPH_SIZE + 1];
+	   // codingHelper(x,"",encodings);
 		return null;
 	}
 	private void writeHeader(HuffNode root, BitOutputStream out) {
@@ -135,7 +139,6 @@ public class HuffProcessor {
 		} else {
 			int value = x.readBits(BITS_PER_WORD + 1);
 			return new HuffNode(value, 0, null, null);
-
 		}
 	}
 
@@ -153,7 +156,7 @@ public class HuffProcessor {
 					y = y.myRight;
 				}
 
-				if (y.myValue > 0) {
+				if (y.myLeft == null && y.myRight == null) {
 					if (y.myValue == PSEUDO_EOF) {
 						break;
 					} else {
